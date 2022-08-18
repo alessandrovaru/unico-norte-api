@@ -15,12 +15,12 @@ class NotionController < ApplicationController
     client = Notion::Client.new
     data = client.database_query(database_id: ENV['NOTION_DB_ID'])
     @list_of_pages = data.results
-    @page_id = ''
+    @page_names = []
     @list_of_pages.each do |page|
-      @page_id = @page_id + ' ' +  page.id
-    end
-
-    render json: { list_of_pages: @page_id } 
+      page_content = client.page(page_id: page.id)
+      @page_names << page_content.properties.framework.title[0].text.content
+    end 
+    render json: @page_names
     
   end
   
