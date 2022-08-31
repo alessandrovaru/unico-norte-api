@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   root to: "notion#logo_load"
+
+  get '/list', to: 'notion#porfolio_load'
 end
